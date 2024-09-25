@@ -10,10 +10,11 @@ module Spassword
 
   def self.verify(hashPassword, password)
     begin
-      password = Crypto::Bcrypt::Password.new(password)
-      isVerified = password.verify(hashPassword)
+      hashPassword = Crypto::Bcrypt::Password.new(hashPassword)
+      isVerified = hashPassword.verify(password)
       isVerified
     rescue ex
+      Log.error{ ex.message }
       false
     end
   end
